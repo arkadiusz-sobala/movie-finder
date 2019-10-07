@@ -1,0 +1,16 @@
+.customSelect-input {
+    width: 95%;
+    border-radius: 25px;
+    height: 30px;
+    border: solid 2px #b5b5b5;
+    background-color: #f6f6f6;
+    margin-top: 5px;
+    padding: 5px 25px;
+    font-size: 16px;
+    transition: all 0.1s linear;
+}
+
+.customSelect-input:focus {
+    outline: none;
+    border: solid 2px rgb(95, 95, 95);
+}
