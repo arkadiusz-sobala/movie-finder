@@ -1,3 +1,48 @@
+.customSelect-img {
+    max-height: fill;
+}
+
+.customSelect-error-container {
+    height: 13vh;
+    border-radius: 2px;
+    background-color: #f6f6f6;
+    text-align: left;
+    padding: 5px 20px;
+    display: flex;
+    transition: all 0.05s linear;
+}
+
+.customSelect-movie-container {
+    height: 13vh;
+    border-radius: 2px;
+    background-color: #f6f6f6;
+    text-align: left;
+    padding: 5px 20px;
+    display: flex;
+    transition: all 0.05s linear;
+}
+
+.customSelect-movie-container:hover {
+    background-color: rgb(189, 189, 189);
+    cursor: pointer;
+}
+
+.customSelect-movie-text {
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    font-size: 20px;
+}
+
+.customSelect-bottom-radius {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.customSelect-contain-all {
+    text-align: -webkit-center;
+}
+
 .customSelect-input {
     width: 95%;
     border-radius: 25px;
@@ -13,4 +58,13 @@
 .customSelect-input:focus {
     outline: none;
     border: solid 2px rgb(95, 95, 95);
+}
+
+.customSelect-movies-dropdown {
+    border: solid 1px grey;
+    border-radius: 25px;
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    width: 93%;
 }

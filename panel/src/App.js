@@ -4,10 +4,12 @@ import axios from "axios";
 import CustomSelect from "./custom-select/custom-select";
 
 class App extends Component {
+    loading = false;
     state = {
         chosenMovie: undefined,
         searchFraze: "",
         foundMovies: [],
+        showMovieList: false,
         searchPlaceholder: "Search movies..."
     };
 
@@ -16,26 +18,59 @@ class App extends Component {
         this.searchMovies(event.target.value);
     };
 
-    searchMovies(searchFraze) {
+    handleMovieListToggle = event => {
+        if (!event)
+            setTimeout(() => {
+                this.setState({ showMovieList: event });
+            }, 200);
+        else this.setState({ showMovieList: event });
+    };
+
+    searchMovies = searchFraze => {
+        let noSpacesSearchFraze = searchFraze.replace(/\s/g, "+");
+        if (!this.loading) {
+            this.loading = true;
+            axios
+                .get(
+                    `http://www.omdbapi.com/?apikey=123497db&s=${noSpacesSearchFraze}&page=1&type=movie`
+                )
+                .then(response => {
+                    if (response.data && response.data.Search) {
+                        this.setState({
+                            foundMovies: []
+                        });
+                        this.setState({
+                            foundMovies: response.data.Search.splice(0, 5)
+                        });
+                    } else if (
+                        response.data.Error &&
+                        response.data.Error !== "Something went wrong."
+                    )
+                        this.setState({
+                            foundMovies: [
+                                { error: true, message: response.data.Error }
+                            ]
+                        });
+                    else this.setState({ foundMovies: [] });
+                    this.loading = false;
+                });
+        }
+    };
+
+    handleMovieLoad = event => {
+        this.loadMovie(event);
+    };
+
+    loadMovie = searchFraze => {
         let noSpacesSearchFraze = searchFraze.replace(/\s/g, "+");
         axios
             .get(
-                `http://www.omdbapi.com/?apikey=123497db&s=${noSpacesSearchFraze}`
+                `http://www.omdbapi.com/?apikey=123497db&t=${noSpacesSearchFraze}&plot=full`
             )
             .then(response => {
-                if (response.data && response.data.Search)
-                    this.setState({
-                        foundMovies: response.data.Search.splice(0, 5)
-                    });
-                else if (response.data.Error)
-                    this.setState({
-                        foundMovies: [
-                            { error: true, message: response.data.Error }
-                        ]
-                    });
-                else this.setState({ foundMovies: [] });
+                console.log(response);
             });
-    }
+    };
 
     render() {
         return (
@@ -45,8 +80,14 @@ class App extends Component {
                         value={this.state.searchFraze}
                         placeholder={this.state.searchPlaceholder}
                         foundMovies={this.state.foundMovies}
-                        foundMovies={this.state.foundMovies}
-                        valueChange={() => this.handleSearchFrazeChange(event)}
+                        showMovieList={this.state.showMovieList}
+                        valueChange={event =>
+                            this.handleSearchFrazeChange(event)
+                        }
+                        toogleMovieList={event =>
+                            this.handleMovieListToggle(event)
+                        }
+                        loadMovie={event => this.handleMovieLoad(event)}
                     ></CustomSelect>
                 </div>
             </div>
