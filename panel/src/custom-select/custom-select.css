@@ -67,4 +67,7 @@
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     width: 93%;
+    position: absolute;
+    width: 85vw;
+    left: 7.5vw;
 }

@@ -2,6 +2,10 @@ import React from "react";
 import "./custom-select.css";
 
 const customSelect = props => {
+    const handleEscapeKey = event => {
+        if (event.keyCode === 27) props.toogleMovieList(false, 0);
+    };
+
     const generatePosterHtml = movie => {
         if (movie.Poster && movie.Poster !== "N/A")
             return (
@@ -78,8 +82,10 @@ const customSelect = props => {
                 placeholder={props.placeholder}
                 value={props.value}
                 onChange={props.valueChange}
-                onFocus={() => props.toogleMovieList(true)}
-                onBlur={() => props.toogleMovieList(false)}
+                onClick={() => props.toogleMovieList(true, 0)}
+                onFocus={() => props.toogleMovieList(true, 0)}
+                onBlur={() => props.toogleMovieList(false, 200)}
+                onKeyDown={() => handleEscapeKey(event)}
             ></input>
             <div className={getDropdownClass()}>{foundMovies}</div>
         </div>

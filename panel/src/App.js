@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
 import CustomSelect from "./custom-select/custom-select";
+import MovieView from "./movie-view/movie-view";
 
 class App extends Component {
     loading = false;
@@ -10,7 +11,7 @@ class App extends Component {
         searchFraze: "",
         foundMovies: [],
         showMovieList: false,
-        searchPlaceholder: "Search movies..."
+        searchPlaceholder: "Search Movie Title..."
     };
 
     handleSearchFrazeChange = event => {
@@ -18,12 +19,10 @@ class App extends Component {
         this.searchMovies(event.target.value);
     };
 
-    handleMovieListToggle = event => {
-        if (!event)
-            setTimeout(() => {
-                this.setState({ showMovieList: event });
-            }, 200);
-        else this.setState({ showMovieList: event });
+    handleMovieListToggle = (event, timeout) => {
+        setTimeout(() => {
+            this.setState({ showMovieList: event });
+        }, timeout);
     };
 
     searchMovies = searchFraze => {
@@ -68,7 +67,9 @@ class App extends Component {
                 `http://www.omdbapi.com/?apikey=123497db&t=${noSpacesSearchFraze}&plot=full`
             )
             .then(response => {
-                console.log(response);
+                console.log(response.data);
+
+                this.setState({ chosenMovie: response.data });
             });
     };
 
@@ -84,11 +85,12 @@ class App extends Component {
                         valueChange={event =>
                             this.handleSearchFrazeChange(event)
                         }
-                        toogleMovieList={event =>
-                            this.handleMovieListToggle(event)
+                        toogleMovieList={(event, timeout) =>
+                            this.handleMovieListToggle(event, timeout)
                         }
                         loadMovie={event => this.handleMovieLoad(event)}
                     ></CustomSelect>
+                    <MovieView chosenMovie={this.state.chosenMovie}></MovieView>
                 </div>
             </div>
         );

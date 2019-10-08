@@ -1,0 +1,37 @@
+.movieView-img {
+    max-height: fill;
+}
+
+.movieView-height {
+    height: calc(90vh - 49px);
+}
+
+.movieView-movie-info {
+    display: grid;
+    text-align: left;
+    padding: 0px 50px;
+}
+
+.movieView-movie-summary {
+    display: flex;
+    flex-flow: column;
+}
+
+.movieView-bold-font {
+    font-weight: 600;
+}
+
+.movieView-big-font {
+    font-size: 35px;
+}
+
+.movieView-medium-font {
+    font-size: 24px;
+}
+
+.movieView-container {
+    display: flex;
+    padding: 25px;
+    padding-bottom: 0px;
+    height: fill;
+}
